@@ -22,12 +22,8 @@ function ArrayChallenge(arr) {
 
   // Test for valid input
   if (occupiedDesks.length > deskCount || highestSeat > deskCount) {
-    throw new Error('InvalidInput' + JSON.stringify(arr))
-  } else {
-    console.log('--valid arrangement--')
+    throw new Error(`InvalidInput${JSON.stringify(arr)}`)
   }
-
-  //Valid arrangement
 
   for (let i = 1; i <= deskCount; i++) {
     // console.log('\nEVALUATING seat (' + i + ')')
