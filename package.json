@@ -1,5 +1,11 @@
 {
   "devDependencies": {
     "jest": "^29.3.1"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3"
   }
 }

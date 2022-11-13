@@ -14,9 +14,6 @@ function ArrayChallenge(arr) {
   const [, ...occupiedDesks] = arr
   highestSeat = occupiedDesks.reduce((a, b) => Math.max(a, b), -Infinity)
 
-  // toggle for console.log
-  // console.log = function () {}
-
   console.log('INPUT: ' + JSON.stringify(arr))
   console.log('deskCount: ' + deskCount)
   console.log('occupiedDesksCount: ' + occupiedDesks.length)
@@ -69,15 +66,4 @@ function ArrayChallenge(arr) {
   return seatCombos.length + 'xXfiXmcX'
 }
 
-const arr1 = [12, 2, 6, 5, 7, 11]
-const arr2 = [5, 1, 2]
-const arr3 = [8, 1, 8, 9]
-
-console.log(ArrayChallenge(arr1))
-
-console.log(ArrayChallenge(arr2))
-
-// console.log(ArrayChallenge(arr3))
-
-// keep this function call here for online testing
-// console.log(ArrayChallenge(readline()))
+module.exports = ArrayChallenge
