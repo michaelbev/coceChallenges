@@ -1,2 +1,2 @@
-# coceChallenges
+# codeChallenges
 random code challenges
