@@ -81,17 +81,20 @@ function FileParseHashChallenge() {
         let hex = crypto.createHash('sha1').update(fs.readFileSync(file)).digest('hex')
 
         hex = hex.concat(token)
+        console.log(`finalHex start:${finalHex}`)
 
         // replace each 3rd
         finalHex = hex.replace(/(..)/g, '$1X')
-        console.log(`finalHex:${finalHex}`)
+        console.log(`finalHex replaced :${finalHex}`)
         return finalHex
       })
+      console.log(`finalHex end:${finalHex}`)
+      return finalHex
     })
     .on('error', err => {
       console.log('error:', err)
     })
-  return finalHex
+
   // return the final output string
 }
 
