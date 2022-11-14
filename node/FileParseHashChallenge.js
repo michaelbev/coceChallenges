@@ -22,6 +22,7 @@ function FileParseHashChallenge() {
   const crypto = require('crypto')
   const file = 'output.txt'
   const token = 'x0fi7mc6'
+  let finalHex = 'notset'
 
   // Uncomment to bypass test
   // TODO: Why is this test timing out?
@@ -82,15 +83,16 @@ function FileParseHashChallenge() {
         hex = hex.concat(token)
 
         // replace each 3rd
-        let finalHex = hex.replace(/(..)/g, '$1X')
+        finalHex = hex.replace(/(..)/g, '$1X')
         console.log(`finalHex:${finalHex}`)
-        // return the final output string
         return finalHex
       })
     })
     .on('error', err => {
       console.log('error:', err)
     })
+  return finalHex
+  // return the final output string
 }
 
 module.exports = FileParseHashChallenge
