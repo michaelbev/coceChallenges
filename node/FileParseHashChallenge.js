@@ -24,12 +24,8 @@ function FileParseHashChallenge() {
   const token = 'x0fi7mc6'
   let finalHex = 'notset'
 
-  // Uncomment to bypass test
-  // TODO: Why is this test timing out?
-  // return '0bX78Xa3X9eXe8Xf9Xc4X9bX60X09X00X38XbaX9xXfiXmcX'
-
-  https
-    .get('https://coderbyte.com/api/challenges/json/age-counting', resp => {
+  return new Promise((resolve, reject) => {
+    https.get('https://coderbyte.com/api/challenges/json/age-counting', resp => {
       let data = ''
       let pair = []
       let age32 = []
@@ -71,7 +67,7 @@ function FileParseHashChallenge() {
               if (err) throw err
             }
         })
-        // //read file
+        //read file
         // let line = readline.createInterface({
         //   input: fs.createReadStream(file),
         // })
@@ -81,21 +77,19 @@ function FileParseHashChallenge() {
         let hex = crypto.createHash('sha1').update(fs.readFileSync(file)).digest('hex')
 
         hex = hex.concat(token)
-        console.log(`finalHex start:${finalHex}`)
+        // console.log(`finalHex start:${finalHex}`)
 
         // replace each 3rd
         finalHex = hex.replace(/(..)/g, '$1X')
-        console.log(`finalHex replaced :${finalHex}`)
-        return finalHex
+        // console.log(`finalHex replaced :${finalHex}`)
+        // return finalHex
+        resolve(finalHex)
       })
-      console.log(`finalHex end:${finalHex}`)
-      return finalHex
     })
-    .on('error', err => {
-      console.log('error:', err)
-    })
-
-  // return the final output string
+  }).finally(() => {
+    // return the final output string
+    return finalHex
+  })
 }
 
 module.exports = FileParseHashChallenge
