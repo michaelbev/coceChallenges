@@ -1,6 +1,9 @@
 # Ignore external modules cache
 node_modules
 
+#challenge output files
+output.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
