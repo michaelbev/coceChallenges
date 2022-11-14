@@ -1,9 +1,6 @@
 const FileParseHashChallenge = require('./FileParseHashChallenge')
 
-const test1 = [
-  'FileParseHashChallenge',
-  '0bX87X81Xa3Xb9Xe2Xe8XafX92Xc4X19Xb8X60Xe0X97X00Xd3X80XbaXf9Xx0XfiX7mXc6X',
-]
+const test1 = ['FileParseHashChallenge', '0bX78Xa3X9eXe8Xf9Xc4X9bX60X09X00X38XbaX9xXfiXmc6']
 
 // Adding more time does not help
 // jest.setTimeout(10000)

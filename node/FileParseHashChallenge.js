@@ -16,78 +16,95 @@
 
 // Your ChallengeToken: x0fi7mc6
 
-function FileParseHashChallenge() {
+async function FileParseHashChallenge() {
   const https = require('https')
   const fs = require('fs')
   const crypto = require('crypto')
   const file = 'output.txt'
   const token = 'x0fi7mc6'
   let finalHex = 'notset'
+  let nth = 3 // the nth character you want to replace
+  let replaceWith = 'X' // the character you want to replace the nth value
 
-  return new Promise((resolve, reject) => {
-    https.get('https://coderbyte.com/api/challenges/json/age-counting', resp => {
-      let data = ''
-      let pair = []
-      let age32 = []
+  try {
+    return await new Promise((resolve, reject) => {
+      // write a program to perform a GET request on the route https://coderbyte.com/api/challenges/json/age-counting which contains a data key and the value is a string which contains items in the format: key=STRING, age=INTEGER.
+      https.get('https://coderbyte.com/api/challenges/json/age-counting', resp => {
+        let data = ''
+        let pair = []
+        let age32 = []
 
-      resp.on('data', chunk => {
-        data += chunk
-      })
-
-      resp.on('end', () => {
-        // console.log(resp);
-        data = data.slice(9, -2)
-        // console.log('here is the response data', data)
-        let array = data.split(',')
-        // console.log('here is the array data', array)
-        array.forEach(function (val, index) {
-          array[index] = val.substring(val.indexOf('=') + 1)
-        })
-        // console.log('here is the array data substringed', array)
-        array.forEach(function (val, index) {
-          // console.log('here is the pair', array[index], array[index + 1])
-          pair[index] = [array[index], parseInt(array[index + 1])]
-          array.shift()
+        resp.on('data', chunk => {
+          data += chunk
         })
 
-        // console.log('here is the paired array data', pair)
-        // console.log('here is the first pair', pair[0])
+        resp.on('end', () => {
+          // console.log(resp);
+          // Remove the noise found in first 10 characters and the last 2 characters
+          data = data.slice(9, -2)
+          // console.log('Sliced data', data)
+          // Split the string into an array of strings
+          let array = data.split(',')
+          // console.log('Array of strings', array)
+          // Remove the var= noise found in each element
+          array.forEach(function (val, index) {
+            array[index] = val.substring(val.indexOf('=') + 1)
+          })
 
-        pair.forEach(function (val, index) {
-          if (val[1] === 32) {
-            age32.push(val[0])
-          }
-        })
-        // console.log('here is the paired 32 year old data', age32)
-        //clear or create file
-        fs.openSync(file, 'w')
-        age32.forEach(function (val, index) {
-          fs.appendFileSync(file, val + '\n'),
-            err => {
-              if (err) throw err
+          // Convert the array into an array of string and integer pairs
+          array.forEach(function (val_1, index_1) {
+            pair[index_1] = [array[index_1], parseInt(array[index_1 + 1])]
+            array.shift()
+          })
+
+          // find items that have an age equal to 32.
+          pair.forEach(function (val_2, index_2) {
+            if (val_2[1] === 32) {
+              age32.push(val_2[0])
             }
-        })
-        //read file
-        // let line = readline.createInterface({
-        //   input: fs.createReadStream(file),
-        // })
-        // line.on('line', function (line) {
-        //   console.log(line)
-        // })
-        let hex = crypto.createHash('sha1').update(fs.readFileSync(file)).digest('hex')
+          })
 
-        hex = hex.concat(token)
-        // console.log(`finalHex start:${finalHex}`)
-        // replace each 3rd
-        finalHex = hex.replace(/(..)/g, '$1X')
-        // console.log(`finalHex replaced :${finalHex}`)
-        resolve(finalHex)
+          // create a write stream to a file called output.txt and the contents should be the key values (from the json) each on a separate line in the order they appeared in the json file (the file should end with a newline character on its own line).
+          fs.openSync(file, 'w')
+          age32.forEach(function (val_3, index_3) {
+            fs.appendFileSync(file, val_3 + '\n'),
+              err => {
+                if (err) throw err
+              }
+          })
+          //read file
+          // let line = readline.createInterface({
+          //   input: fs.createReadStream(file),
+          // })
+          // line.on('line', function (line) {
+          //   console.log('Line in file',line)
+          // })
+
+          // Output the SHA1 hash of the file.
+          let hex = crypto.createHash('sha1').update(fs.readFileSync(file)).digest('hex')
+
+          // Append ChallengeToken to hex
+          hex = hex.concat(token)
+          // console.log(`hexBeforeReplace:${hex}`)
+
+          // Replace every third character with an X.
+          //// REGEX - Not correct yet
+          //// finalHex = hex.replace(/(.{2})/g, '$1X')
+          // Older way yet works, good enough for now
+          hex = hex.split('')
+          for (var i = nth - 1; i < hex.length - 1; i += nth) {
+            hex[i] = replaceWith
+          }
+          finalHex = hex.join('')
+
+          // console.log(`finalHex:        ${finalHex}`)
+          resolve(finalHex)
+        })
       })
     })
-  }).finally(() => {
-    // return the final output string
+  } finally {
     return finalHex
-  })
+  }
 }
 
 module.exports = FileParseHashChallenge
