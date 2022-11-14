@@ -14,6 +14,7 @@ function ArrayChallenge(arr) {
   const [, ...occupiedDesks] = arr
   highestSeat = occupiedDesks.reduce((a, b) => Math.max(a, b), -Infinity)
 
+  console.log = function () {}
   console.log('INPUT: ' + JSON.stringify(arr))
   console.log('deskCount: ' + deskCount)
   console.log('occupiedDesksCount: ' + occupiedDesks.length)
