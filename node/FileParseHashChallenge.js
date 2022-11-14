@@ -78,11 +78,9 @@ function FileParseHashChallenge() {
 
         hex = hex.concat(token)
         // console.log(`finalHex start:${finalHex}`)
-
         // replace each 3rd
         finalHex = hex.replace(/(..)/g, '$1X')
         // console.log(`finalHex replaced :${finalHex}`)
-        // return finalHex
         resolve(finalHex)
       })
     })
